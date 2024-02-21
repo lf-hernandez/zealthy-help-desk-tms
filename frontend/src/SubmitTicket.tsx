@@ -1,5 +1,6 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import * as React from 'react';
+import { toast } from 'react-hot-toast';
 
 const BASE_URL = `${import.meta.env.VITE_API_URL}/tickets/`;
 
@@ -28,8 +29,9 @@ export const SubmitTicket = () => {
                     description: description,
                 }),
             });
+            toast.success('Ticket submitted successfully');
         } catch (e) {
-            alert('Failed to submit ticket');
+            toast.error('Failed to submit ticket');
             console.error(e);
         }
 

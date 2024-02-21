@@ -12,6 +12,7 @@ import {
     useTheme,
 } from '@mui/material';
 import * as React from 'react';
+import { Toaster } from 'react-hot-toast';
 
 import { AdminPanel } from './AdminPanel';
 import { SubmitTicket } from './SubmitTicket';
@@ -48,6 +49,7 @@ function App() {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
+            <Toaster />
             {isMobile ? (
                 <FormControl fullWidth sx={{ marginBottom: 2 }}>
                     <Select

@@ -22,6 +22,7 @@ import {
     useTheme,
 } from '@mui/material';
 import * as React from 'react';
+import { toast } from 'react-hot-toast';
 
 const BASE_URL = `${import.meta.env.VITE_API_URL}/tickets/`;
 
@@ -69,7 +70,7 @@ export const AdminPanel = () => {
 
     const updateTicketStatus = async (id: string) => {
         try {
-            const response = await fetch(`${BASE_URL}/${id}/status`, {
+            await fetch(`${BASE_URL}/${id}/status`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,11 +82,9 @@ export const AdminPanel = () => {
                 }),
             });
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            toast.success('Ticket status updated successfully');
         } catch (e) {
-            alert('Failed to update ticket');
+            toast.error('Failed to update ticket');
             console.error(e);
         }
         await getAllTickets();
