@@ -22,6 +22,7 @@ function App() {
             });
         } catch (e) {
             alert('Failed to submit ticket');
+            console.error(e);
         }
     };
 
