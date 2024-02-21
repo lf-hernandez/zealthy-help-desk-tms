@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
-	addr := ":8000"
+	addr := os.Getenv("PORT")
 
 	http.HandleFunc("/", handleRoot)
 
