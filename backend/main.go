@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	addr := os.Getenv("PORT")
+	addr := ":" + os.Getenv("PORT")
 
 	http.HandleFunc("/", handleRoot)
 
