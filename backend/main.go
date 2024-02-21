@@ -8,17 +8,18 @@ import (
 
 	_ "github.com/joho/godotenv/autoload"
 	_ "github.com/lib/pq"
+	"github.com/rs/cors"
 )
 
 var db *sql.DB
 
 func main() {
 	addr := ":" + os.Getenv("PORT")
-	db_url := os.Getenv("DATABASE_URL")
+	dbUrl := os.Getenv("DATABASE_URL")
 
-	log.Printf("[INFO] connecting to database server on: %v", db_url)
+	log.Printf("[INFO] connecting to database server on: %v", dbUrl)
 	var err error
-	db, err = sql.Open("postgres", db_url)
+	db, err = sql.Open("postgres", dbUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,8 +36,17 @@ func (server *APIServer) Run() {
 	mux.HandleFunc("GET /tickets/{id}", requestHandler(server.handleTicketById))
 	mux.HandleFunc("PUT /tickets/{id}/status", requestHandler(server.handleUpdateTicketStatus))
 
-	log.Printf("[INFO] starting server on port %v", server.listenAddress)
-	if err := http.ListenAndServe(server.listenAddress, mux); err != nil {
+	origins := []string{os.Getenv("CORS_ORIGIN")}
+	log.Printf("CORS Origins: %v", origins)
+	corsHandler := cors.New(cors.Options{
+		AllowedOrigins:   origins,
+		AllowCredentials: true,
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"*"},
+	})
+
+	log.Printf("[INFO] starting server on port%v", server.listenAddress)
+	if err := http.ListenAndServe(server.listenAddress, corsHandler.Handler(mux)); err != nil {
 		log.Fatalf("[ERROR] server failed to start: %v", err)
 	}
 }
