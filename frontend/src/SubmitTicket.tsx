@@ -8,6 +8,12 @@ export const SubmitTicket = () => {
     const [customerEmail, setCustomerEmail] = React.useState('');
     const [description, setDescription] = React.useState('');
 
+    const clearFields = () => {
+        setCustomerName('');
+        setCustomerEmail('');
+        setDescription('');
+    };
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
@@ -26,6 +32,8 @@ export const SubmitTicket = () => {
             alert('Failed to submit ticket');
             console.error(e);
         }
+
+        clearFields();
     };
 
     return (
@@ -41,6 +49,7 @@ export const SubmitTicket = () => {
                         label="Name"
                         variant="outlined"
                         margin="normal"
+                        value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
                     />
                     <TextField
@@ -48,6 +57,7 @@ export const SubmitTicket = () => {
                         label="Email"
                         variant="outlined"
                         margin="normal"
+                        value={customerEmail}
                         onChange={(e) => setCustomerEmail(e.target.value)}
                     />
                     <TextField
@@ -57,6 +67,7 @@ export const SubmitTicket = () => {
                         rows={4}
                         variant="outlined"
                         margin="normal"
+                        value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
                 </Box>
