@@ -32,14 +32,12 @@ function App() {
     const drawerContent = (
         <List>
             <ListItem
-                button
                 onClick={() => setShowAdminPanel(false)}
                 sx={!showAdminPanel ? activeItemBackground : null}
             >
                 <ListItemText primary="Submit Ticket" />
             </ListItem>
             <ListItem
-                button
                 onClick={() => setShowAdminPanel(true)}
                 sx={showAdminPanel ? activeItemBackground : null}
             >
