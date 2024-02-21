@@ -3,7 +3,7 @@ package main
 import "time"
 
 type Ticket struct {
-	ID                    int       `json:"id"`
+	ID                    string    `json:"id"`
 	Description           string    `json:"description"`
 	DateCreated           time.Time `json:"date_created"`
 	LastModified          time.Time `json:"last_modified"`
