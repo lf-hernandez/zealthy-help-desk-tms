@@ -2,6 +2,8 @@
 
 Full Stack Engineering Exercise
 
+* Committed .env files for ease of running locally, wouldn't do this in real scenario. Strictly for demo purposes.
+
 ## Dev
 
 To start frontend:
