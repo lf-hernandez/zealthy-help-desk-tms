@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import * as React from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [customerName, setCustomerName] = React.useState('');
+    const [customerEmail, setCustomerEmail] = React.useState('');
+    const [description, setDescription] = React.useState('');
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const handleNewTicket = () => {
+        alert(`form data: ${customerName}, ${customerEmail}, ${description}`);
+    };
+
+    return (
+        <Container maxWidth="md">
+            <Typography variant="h2" gutterBottom>
+                Submit Support Ticket
+            </Typography>
+            <hr />
+
+            <Box my={4}>
+                <TextField
+                    fullWidth
+                    label="Name"
+                    variant="outlined"
+                    margin="normal"
+                    onChange={(e) => setCustomerName(e.target.value)}
+                />
+                <TextField
+                    fullWidth
+                    label="Email"
+                    variant="outlined"
+                    margin="normal"
+                    onChange={(e) => setCustomerEmail(e.target.value)}
+                />
+                <TextField
+                    fullWidth
+                    label="Description"
+                    multiline
+                    rows={4}
+                    variant="outlined"
+                    margin="normal"
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+            </Box>
+
+            <Box display="flex" justifyContent="flex-end" mt={2}>
+                <Button variant="contained" color="primary" onClick={handleNewTicket}>
+                    Submit
+                </Button>
+            </Box>
+        </Container>
+    );
 }
 
-export default App
+export default App;
