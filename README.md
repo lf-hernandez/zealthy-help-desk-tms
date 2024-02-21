@@ -37,6 +37,6 @@ docker run -d --name zealthy-database-server -e POSTGRES_DB=zealthy-db -e POSTGR
 To trigger run deploy script (must be authorized on heroku*):
 
 ```bash
-chmod 700 ./deploy.sh 
+chmod 700 deploy.sh 
 ./deploy.sh
 ```
