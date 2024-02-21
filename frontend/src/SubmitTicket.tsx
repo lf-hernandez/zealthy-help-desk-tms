@@ -8,7 +8,8 @@ export const SubmitTicket = () => {
     const [customerEmail, setCustomerEmail] = React.useState('');
     const [description, setDescription] = React.useState('');
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         try {
             await fetch(BASE_URL, {
                 method: 'POST',
@@ -33,7 +34,7 @@ export const SubmitTicket = () => {
                 Submit Support Ticket
             </Typography>
             <hr />
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={(event) => handleSubmit(event)}>
                 <Box my={4}>
                     <TextField
                         fullWidth
