@@ -3,7 +3,6 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle,
     FormControl,
     InputLabel,
@@ -188,8 +187,9 @@ export const AdminPanel = () => {
 
             <Dialog open={modalOpen} onClose={handleClose} fullScreen={fullScreen}>
                 <DialogTitle>{'Ticket Details'}</DialogTitle>
+
                 <DialogContent>
-                    <DialogContentText>
+                    <div>
                         <Typography sx={{ mt: 2 }}>
                             {selectedTicket && `ID: ${selectedTicket.ticketId}`}
                         </Typography>
@@ -241,7 +241,7 @@ export const AdminPanel = () => {
                             value={resolutionDescription}
                             onChange={(e) => setResolutionDescription(e.target.value)}
                         />
-                    </DialogContentText>
+                    </div>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
