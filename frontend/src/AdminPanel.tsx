@@ -218,8 +218,12 @@ export const AdminPanel = () => {
                             </div>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleClose}>Cancel</Button>
-                            <Button onClick={onUpdate}>Update</Button>
+                            <Button onClick={handleClose} color="secondary">
+                                Cancel
+                            </Button>
+                            <Button onClick={onUpdate} color="primary">
+                                Update
+                            </Button>
                         </DialogActions>
                     </Dialog>
                 </>
