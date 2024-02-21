@@ -23,120 +23,61 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 
+const BASE_URL = `${import.meta.env.VITE_API_URL}/tickets/`;
+
+type Ticket = {
+    customer_email: string;
+    customer_name: string;
+    date_created: string;
+    description: string;
+    employee_name: string;
+    id: string;
+    last_modified: string;
+    resolution_description: string;
+    status: string;
+};
+
 export const AdminPanel = () => {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const [selectedTicket, setSelectedTicket] = React.useState<{
-        ticketId: string;
-        description: string;
-        createdOn: string;
-        lastModifiedOn: string;
-        customerName: string;
-        customerEmail: string;
-        status: string;
-        assignee: string;
-        resolutionDescription: string;
-    }>();
+
+    const [tickets, setTickets] = React.useState<Array<Ticket>>([]);
+    const [selectedTicket, setSelectedTicket] = React.useState<Ticket>();
+
     const [status, setStatus] = React.useState('');
     const [resolutionDescription, setResolutionDescription] = React.useState('');
     const [assignee, setAssignee] = React.useState('');
-    const [modalOpen, setModalOpen] = React.useState(false);
-    function createData(
-        ticketId: string,
-        description: string,
-        createdOn: string,
-        lastModifiedOn: string,
-        customerName: string,
-        customerEmail: string,
-        status: string,
-        assignee: string,
-        resolutionDescription: string
-    ) {
-        return {
-            ticketId,
-            description,
-            createdOn,
-            lastModifiedOn,
-            customerName,
-            customerEmail,
-            status,
-            assignee,
-            resolutionDescription,
-        };
-    }
 
-    const rows = [
-        createData(
-            '1',
-            'printer not connecting',
-            '2024-02-21T20:18:34.692284Z',
-            '2024-02-21T20:18:34.692284Z',
-            'John Smith',
-            'jsmith@email.com',
-            'new',
-            '',
-            ''
-        ),
-        createData(
-            '2',
-            'scanner restarting randomly',
-            '2024-02-21T20:18:34.692284Z',
-            '2024-02-21T20:18:34.692284Z',
-            'John Smith',
-            'jsmith@email.com',
-            'in progress',
-            'Tim',
-            ''
-        ),
-        createData(
-            '3',
-            'phone transferring randomly',
-            '2024-02-21T20:18:34.692284Z',
-            '2024-02-21T20:18:34.692284Z',
-            'John Smith',
-            'jsmith@email.com',
-            'resolved',
-            'Larry',
-            ''
-        ),
-        createData(
-            '4',
-            'monitor blanking',
-            '2024-02-21T20:18:34.692284Z',
-            '2024-02-21T20:18:34.692284Z',
-            'John Smith',
-            'jsmith@email.com',
-            'in progress',
-            'Jen',
-            ''
-        ),
-        createData(
-            '5',
-            'keyboard key needs to be replaces',
-            '2024-02-21T20:18:34.692284Z',
-            '2024-02-21T20:18:34.692284Z',
-            'John Smith',
-            'jsmith@email.com',
-            'new',
-            '',
-            ''
-        ),
-    ];
-    const handleRowClick = (ticket: {
-        ticketId: string;
-        description: string;
-        createdOn: string;
-        lastModifiedOn: string;
-        customerName: string;
-        customerEmail: string;
-        status: string;
-        assignee: string;
-        resolutionDescription: string;
-    }) => {
+    const [modalOpen, setModalOpen] = React.useState(false);
+
+    React.useEffect(() => {
+        const getAllTickets = async () => {
+            try {
+                const response = await fetch(BASE_URL, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const data = await response.json();
+                setTickets(data);
+            } catch (e) {
+                alert('Failed to load tickets');
+                console.error(e);
+            }
+        };
+
+        getAllTickets();
+    }, []);
+
+    console.log('data: ', tickets);
+
+    const handleRowClick = (ticket: Ticket) => {
         setSelectedTicket(ticket);
         setStatus(ticket.status);
-        setResolutionDescription(ticket.resolutionDescription);
-        setAssignee(ticket.assignee);
+        setResolutionDescription(ticket.resolution_description);
+        setAssignee(ticket.employee_name);
         setModalOpen(true);
     };
     const handleStatusChange = (event: SelectChangeEvent) =>
@@ -166,19 +107,19 @@ export const AdminPanel = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {tickets.map((ticket) => (
                             <TableRow
-                                key={row.ticketId}
+                                key={ticket.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                onClick={() => handleRowClick(row)}
-                                style={{ cursor: 'pointer' }} // Add cursor style
+                                onClick={() => handleRowClick(ticket)}
+                                style={{ cursor: 'pointer' }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {row.ticketId}
+                                    {ticket.id}
                                 </TableCell>
-                                <TableCell align="left">{row.description}</TableCell>
-                                <TableCell align="left">{row.assignee}</TableCell>
-                                <TableCell align="left">{row.status}</TableCell>
+                                <TableCell align="left">{ticket.description}</TableCell>
+                                <TableCell align="left">{ticket.employee_name}</TableCell>
+                                <TableCell align="left">{ticket.status}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -191,19 +132,19 @@ export const AdminPanel = () => {
                 <DialogContent>
                     <div>
                         <Typography sx={{ mt: 2 }}>
-                            {selectedTicket && `ID: ${selectedTicket.ticketId}`}
+                            {selectedTicket && `ID: ${selectedTicket.id}`}
                         </Typography>
                         <Typography sx={{ mt: 2 }}>
-                            {selectedTicket && `Created on: ${selectedTicket.createdOn}`}
+                            {selectedTicket && `Created on: ${selectedTicket.date_created}`}
                         </Typography>
                         <Typography sx={{ mt: 2 }}>
                             {selectedTicket && `Description: ${selectedTicket.description}`}
                         </Typography>
                         <Typography sx={{ mt: 2 }}>
-                            {selectedTicket && `Customer Name: ${selectedTicket.customerName}`}
+                            {selectedTicket && `Customer Name: ${selectedTicket.customer_name}`}
                         </Typography>
                         <Typography sx={{ mt: 2 }}>
-                            {selectedTicket && `Customer Email: ${selectedTicket.customerEmail}`}
+                            {selectedTicket && `Customer Email: ${selectedTicket.customer_email}`}
                         </Typography>
                         <TextField
                             fullWidth
@@ -214,7 +155,7 @@ export const AdminPanel = () => {
                             onChange={(e) => setAssignee(e.target.value)}
                         />
                         <Typography sx={{ my: 2 }}>
-                            {selectedTicket && `Last modified: ${selectedTicket.lastModifiedOn}`}
+                            {selectedTicket && `Last modified: ${selectedTicket.last_modified}`}
                         </Typography>
 
                         <FormControl fullWidth>
