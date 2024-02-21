@@ -14,7 +14,7 @@ var db *sql.DB
 
 func main() {
 	addr := ":" + os.Getenv("PORT")
-	db_url := os.Getenv("DB_URL")
+	db_url := os.Getenv("DATABASE_URL")
 
 	log.Printf("[INFO] connecting to database server on: %v", db_url)
 	var err error
