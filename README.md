@@ -27,3 +27,14 @@ docker build -t zealthy-postgres .
 docker volume create zealthy-postgres-data
 docker run -d --name zealthy-database-server -e POSTGRES_DB=zealthy-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -v zealthy-postgres-data:/var/lib/postgresql/data -p 5432:5432 zealthy-postgres
 ```
+
+## Prod
+
+### Triggering Deployments
+
+To trigger run deploy script (must be authorized on heroku*):
+
+```bash
+chmod 700 ./deploy.sh 
+./deploy.sh
+```
