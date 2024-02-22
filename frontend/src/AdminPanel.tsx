@@ -21,6 +21,7 @@ import {
     useMediaQuery,
     useTheme,
 } from '@mui/material';
+import moment from 'moment';
 import * as React from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -164,7 +165,10 @@ export const AdminPanel = () => {
                                     {selectedTicket && `ID: ${selectedTicket.id}`}
                                 </Typography>
                                 <Typography sx={{ mt: 2 }}>
-                                    {selectedTicket && `Created on: ${selectedTicket.date_created}`}
+                                    {selectedTicket &&
+                                        `Created on: ${moment(selectedTicket.date_created).format(
+                                            'MMMM DD, YYYY @ h:mm a'
+                                        )}`}
                                 </Typography>
                                 <Typography sx={{ mt: 2 }}>
                                     {selectedTicket && `Description: ${selectedTicket.description}`}
@@ -187,7 +191,9 @@ export const AdminPanel = () => {
                                 />
                                 <Typography sx={{ my: 2 }}>
                                     {selectedTicket &&
-                                        `Last modified: ${selectedTicket.last_modified}`}
+                                        `Last modified: ${moment(
+                                            selectedTicket.last_modified
+                                        ).format('MMMM DD, YYYY @ h:mm a')}`}
                                 </Typography>
 
                                 <FormControl fullWidth>
