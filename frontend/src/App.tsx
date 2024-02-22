@@ -8,6 +8,7 @@ import {
     ListItemText,
     MenuItem,
     Select,
+    SelectChangeEvent,
     useMediaQuery,
     useTheme,
 } from '@mui/material';
@@ -20,14 +21,18 @@ import { SubmitTicket } from './SubmitTicket';
 function App() {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     const [showAdminPanel, setShowAdminPanel] = React.useState(false);
+    
     const drawerWidth = 240;
     const activeItemBackground = {
         backgroundColor: '#f4f4f4',
     };
+    const SELECT_OPTION_ADMIN_PANEL = 'adminPanel';
+    const SELECT_OPTION_SUBMIT_TICKET = 'submitTicket';
 
-    const handleSelectChange = (event: { target: { value: string } }) => {
-        setShowAdminPanel(event.target.value === 'adminPanel');
+    const handleSelectChange = (event: SelectChangeEvent) => {
+        setShowAdminPanel((event.target.value as string) === SELECT_OPTION_ADMIN_PANEL);
     };
 
     const drawerContent = (
@@ -48,37 +53,43 @@ function App() {
     );
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
-            <Toaster />
-            {isMobile ? (
-                <FormControl fullWidth sx={{ marginBottom: 2 }}>
-                    <Select
-                        value={showAdminPanel ? 'adminPanel' : 'submitTicket'}
-                        onChange={handleSelectChange}
-                        displayEmpty
-                        inputProps={{ 'aria-label': 'Without label' }}
+        <>
+            <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
+                <Toaster />
+                {isMobile ? (
+                    <FormControl fullWidth sx={{ marginBottom: 2 }}>
+                        <Select
+                            value={
+                                showAdminPanel
+                                    ? SELECT_OPTION_ADMIN_PANEL
+                                    : SELECT_OPTION_SUBMIT_TICKET
+                            }
+                            onChange={handleSelectChange}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                        >
+                            <MenuItem value={SELECT_OPTION_SUBMIT_TICKET}>Submit Ticket</MenuItem>
+                            <MenuItem value={SELECT_OPTION_ADMIN_PANEL}>Admin Panel</MenuItem>
+                        </Select>
+                    </FormControl>
+                ) : (
+                    <Drawer
+                        variant="permanent"
+                        sx={{
+                            width: drawerWidth,
+                            flexShrink: 0,
+                            [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+                        }}
                     >
-                        <MenuItem value="submitTicket">Submit Ticket</MenuItem>
-                        <MenuItem value="adminPanel">Admin Panel</MenuItem>
-                    </Select>
-                </FormControl>
-            ) : (
-                <Drawer
-                    variant="permanent"
-                    sx={{
-                        width: drawerWidth,
-                        flexShrink: 0,
-                        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-                    }}
-                >
-                    {drawerContent}
-                </Drawer>
-            )}
+                        {drawerContent}
+                    </Drawer>
+                )}
 
-            <Container maxWidth="md" sx={{ width: '100%' }}>
-                {showAdminPanel ? <AdminPanel /> : <SubmitTicket />}
-            </Container>
-        </Box>
+                <Container maxWidth="md" sx={{ width: '100%' }}>
+                    {showAdminPanel ? <AdminPanel /> : <SubmitTicket />}
+                </Container>
+            </Box>
+        </>
     );
 }
 
