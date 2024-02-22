@@ -149,7 +149,11 @@ export const AdminPanel = () => {
                                             {ticket.id}
                                         </TableCell>
                                         <TableCell align="left">{ticket.description}</TableCell>
-                                        <TableCell align="left">{ticket.employee_name}</TableCell>
+                                        <TableCell align="left">
+                                            {ticket.employee_name === ''
+                                                ? '-'
+                                                : ticket.employee_name}
+                                        </TableCell>
                                         <TableCell align="left">{ticket.status}</TableCell>
                                         <TableCell align="left">
                                             {moment(ticket.date_created).format('MM-DD-YY')}
