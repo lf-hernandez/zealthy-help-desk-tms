@@ -134,6 +134,7 @@ export const AdminPanel = () => {
                                     <TableCell align="left">Description</TableCell>
                                     <TableCell align="left">Assignee</TableCell>
                                     <TableCell align="left">Status</TableCell>
+                                    <TableCell align="left">Created</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -150,6 +151,9 @@ export const AdminPanel = () => {
                                         <TableCell align="left">{ticket.description}</TableCell>
                                         <TableCell align="left">{ticket.employee_name}</TableCell>
                                         <TableCell align="left">{ticket.status}</TableCell>
+                                        <TableCell align="left">
+                                            {moment(ticket.date_created).format('MM-DD-YY')}
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
