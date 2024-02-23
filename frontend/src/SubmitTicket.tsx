@@ -47,6 +47,7 @@ export const SubmitTicket = () => {
             <form onSubmit={(event) => handleSubmit(event)}>
                 <Box my={4}>
                     <TextField
+                        required
                         fullWidth
                         label="Name"
                         variant="outlined"
@@ -55,6 +56,7 @@ export const SubmitTicket = () => {
                         onChange={(e) => setCustomerName(e.target.value)}
                     />
                     <TextField
+                        required
                         fullWidth
                         label="Email"
                         variant="outlined"
@@ -63,6 +65,7 @@ export const SubmitTicket = () => {
                         onChange={(e) => setCustomerEmail(e.target.value)}
                     />
                     <TextField
+                        required
                         fullWidth
                         label="Description"
                         multiline
@@ -75,7 +78,12 @@ export const SubmitTicket = () => {
                 </Box>
 
                 <Box display="flex" justifyContent="flex-end" mt={2}>
-                    <Button type="submit" variant="contained" color="primary">
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        disabled={customerName === '' || customerEmail === '' || description === ''}
+                    >
                         Submit
                     </Button>
                 </Box>
