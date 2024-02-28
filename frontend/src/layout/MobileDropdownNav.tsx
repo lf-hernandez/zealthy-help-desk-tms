@@ -27,7 +27,9 @@ export const MobileDropdownNav = () => {
                 inputProps={{ 'aria-label': 'Without label' }}
             >
                 {navItems.map((item) => (
-                    <MenuItem value={item.key}>item.value</MenuItem>
+                    <MenuItem key={item.key} value={item.key}>
+                        {item.value}
+                    </MenuItem>
                 ))}
             </Select>
         </FormControl>

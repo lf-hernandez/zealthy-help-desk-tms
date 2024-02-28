@@ -91,7 +91,9 @@ export const TicketModal = ({ modalOpen, closeModal }: Props) => {
                             onChange={handleStatusChange}
                         >
                             {statusItems.map((item) => (
-                                <MenuItem value={item.key}>{item.value}</MenuItem>
+                                <MenuItem key={item.key} value={item.key}>
+                                    {item.value}
+                                </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -109,10 +111,10 @@ export const TicketModal = ({ modalOpen, closeModal }: Props) => {
                 </div>
             </DialogContent>
             <DialogActions>
-                <Button onClick={closeModal} color="secondary">
+                <Button variant="contained" onClick={closeModal} color="secondary">
                     Cancel
                 </Button>
-                <Button onClick={onUpdate} color="primary">
+                <Button variant="contained" onClick={onUpdate} color="primary">
                     Update
                 </Button>
             </DialogActions>

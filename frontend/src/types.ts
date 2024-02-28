@@ -24,6 +24,7 @@ export type AddTicketInput = {
     customerEmail: string;
     customerName: string;
     description: string;
+    status?: TicketStatus;
 };
 
 export type UpdateTicketInput = {

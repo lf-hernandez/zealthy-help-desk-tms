@@ -14,14 +14,13 @@ export const createTicket = (input: AddTicketInput): Ticket => {
         description: input.description,
         dateCreated: currentDate,
         lastModified: currentDate,
-        employeeName: '',
         resolutionDescription: '',
-        status: TicketStatus.NEW,
+        status: input.status ?? TicketStatus.NEW,
     };
 };
 
 const generateRandomCustomerData = () => {
-    const customerNames = ['Brie', 'Kyle', 'Shanti', 'John'];
+    const customerNames = ['Brie Smith', 'Kyle Smith', 'Shanti Smith', 'John Smith'];
     const customerEmails = [
         'brie@example.com',
         'kyle@example.com',
@@ -35,11 +34,15 @@ const generateRandomCustomerData = () => {
         'Feature request',
     ];
 
+    const statusValues = Object.values(TicketStatus);
+    const randomStatusIndex = Math.floor(Math.random() * statusValues.length);
+
     const randomIndex = Math.floor(Math.random() * 4);
     return {
         customerName: customerNames[randomIndex],
         customerEmail: customerEmails[randomIndex],
         description: descriptions[randomIndex],
+        status: statusValues[randomStatusIndex],
     };
 };
 
@@ -47,8 +50,6 @@ export const initialTickets = () => {
     const generatedTickets = Array.from({ length: 4 }, () => {
         return createTicket(generateRandomCustomerData());
     });
-
-    console.log('Generated tickets:', generatedTickets);
 
     return generatedTickets;
 };
