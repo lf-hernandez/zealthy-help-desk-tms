@@ -44,7 +44,16 @@ export const TicketsTable = ({ onClick }: Props) => {
                             }}
                             style={{ cursor: 'pointer' }}
                         >
-                            <TableCell component="th" scope="row">
+                            <TableCell
+                                sx={{
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    maxWidth: '50px',
+                                }}
+                                component="th"
+                                scope="row"
+                            >
                                 {ticket.description}
                             </TableCell>
                             <TableCell align="left">{ticket.customerName}</TableCell>

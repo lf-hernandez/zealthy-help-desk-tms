@@ -39,7 +39,17 @@ export const MobileTicketListItem = ({ ticket, onPress }: Props) => {
 
             <CardContent sx={{ marginLeft: '10px' }}>
                 {' '}
-                <Typography variant="subtitle1" component="h2" sx={{ fontWeight: 'bold' }}>
+                <Typography
+                    sx={{
+                        fontWeight: 'bold',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        maxWidth: '200px',
+                    }}
+                    variant="subtitle1"
+                    component="h2"
+                >
                     {ticket.description}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">

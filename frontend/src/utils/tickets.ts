@@ -31,7 +31,7 @@ const generateRandomCustomerData = () => {
         'Issue with account',
         'Payment problem',
         'Technical support',
-        'Feature request',
+        'Feature request, testing really really really long string. It should be truncated.',
     ];
 
     const statusValues = Object.values(TicketStatus);
