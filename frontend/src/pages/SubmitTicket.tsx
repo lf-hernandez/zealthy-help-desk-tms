@@ -1,13 +1,13 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import * as React from 'react';
 import { toast } from 'react-hot-toast';
-
-const BASE_URL = `${import.meta.env.VITE_API_URL}/tickets/`;
+import { useTickets } from '../hooks/tickets';
 
 export const SubmitTicket = () => {
     const [customerName, setCustomerName] = React.useState('');
     const [customerEmail, setCustomerEmail] = React.useState('');
     const [description, setDescription] = React.useState('');
+    const {addTicket} = useTickets(); 
 
     const clearFields = () => {
         setCustomerName('');
@@ -15,20 +15,14 @@ export const SubmitTicket = () => {
         setDescription('');
     };
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit =  (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            await fetch(BASE_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    customer_name: customerName,
-                    customer_email: customerEmail,
-                    description: description,
-                }),
-            });
+            addTicket({
+                customerEmail,
+                customerName,
+                description
+            })
             toast.success('Ticket submitted successfully');
         } catch (e) {
             toast.error('Failed to submit ticket');
@@ -63,6 +57,7 @@ export const SubmitTicket = () => {
                         margin="normal"
                         value={customerEmail}
                         onChange={(e) => setCustomerEmail(e.target.value)}
+                        type="email"
                     />
                     <TextField
                         required
