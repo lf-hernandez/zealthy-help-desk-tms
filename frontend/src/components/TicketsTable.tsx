@@ -38,11 +38,19 @@ export const TicketsTable = ({ onClick }: Props) => {
                     {tickets.map((ticket) => (
                         <TableRow
                             key={ticket.id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            sx={{
+                                '&:last-child td, &:last-child th': { border: 0 },
+                                '&:hover': {
+                                    backgroundColor: '#f4f4f4',
+                                    cursor: 'pointer',
+                                },
+                            }}
                             onClick={() => {
                                 onClick(ticket);
                             }}
-                            style={{ cursor: 'pointer' }}
+                            style={{
+                                cursor: 'pointer',
+                            }}
                         >
                             <TableCell
                                 sx={{
