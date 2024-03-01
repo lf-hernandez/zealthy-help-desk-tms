@@ -14,7 +14,14 @@ export const SideNav = () => {
         },
     };
     const activeItemStyles = {
-        backgroundColor: '#f4f4f4',
+        backgroundColor: '#e0e0e0',
+        cursor: 'pointer',
+    };
+    const hoverItemStyles = {
+        '&:hover': {
+            backgroundColor: '#f4f4f4',
+            cursor: 'pointer',
+        },
     };
 
     const { currentPage, setCurrentPage } = useNavigation();
@@ -23,13 +30,13 @@ export const SideNav = () => {
         <List>
             <ListItem
                 onClick={() => setCurrentPage(Pages.SUBMIT_FORM)}
-                sx={currentPage === Pages.SUBMIT_FORM ? activeItemStyles : null}
+                sx={currentPage === Pages.SUBMIT_FORM ? activeItemStyles : hoverItemStyles}
             >
                 <ListItemText primary="Submit Ticket" />
             </ListItem>
             <ListItem
                 onClick={() => setCurrentPage(Pages.ADMIN_PANEL)}
-                sx={currentPage === Pages.ADMIN_PANEL ? activeItemStyles : null}
+                sx={currentPage === Pages.ADMIN_PANEL ? activeItemStyles : hoverItemStyles}
             >
                 <ListItemText primary="Admin Panel" />
             </ListItem>
